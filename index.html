@@ -45,12 +45,12 @@
         <div id="content">
             <h4>TRAVELLED ROUTES</h4>
             <ul>
-                <li>Munnar Trip</li>
-                <ul><p>Link</p></ul>
+                <li>Ooty Trip</li>
+                <ul><p onclick="loadgeojson('./route/from7_3.geojson')">Link</p></ul>
                 <li>Hyderabad Trip</li>
-                <ul><p>Link</p></ul>
+                <ul><p onclick="loadgeojson('./route/from8_1.geojson')">Link</p></ul>
                 <li>Kodaikanal Trip</li>
-                <ul><p>Link</p></ul>
+                <ul><p onclick="loadgeojson('./route/from8_6.geojson')">Link</p></ul>
             </ul>
         </div>
         <div id="map"></div>
@@ -78,6 +78,24 @@
                 position:'topleft',
                 measureControlTitle:'Measure Tool'
             })
+            //var geojsonLayer;
+            function loadgeojson(geojsonFile){
+
+                fetch(geojsonFile)
+                    .then(response=> {
+                        if (!response.ok){
+                            throw new Error(`GeoJSON file not found: ${geojsonFile}`);
+                        }
+                    return response.json();
+                })
+                .then(data => {
+                    geojsonLayer = L.geoJSON(data).addTo(map);
+                    map.fitBounds(geojsonLayer.getBounds());
+                })
+                .catch(error => {
+                    console.error('Error loading GeoJSON:',error);
+                });
+            }
         </script>
     </body>
 </html>
