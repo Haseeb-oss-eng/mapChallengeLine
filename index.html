@@ -78,9 +78,11 @@
                 position:'topleft',
                 measureControlTitle:'Measure Tool'
             })
-            //var geojsonLayer;
+            var geojsonLayer;
             function loadgeojson(geojsonFile){
-
+                if(geojsonLayer){
+                    map.removeLayer(geojsonLayer)
+                }
                 fetch(geojsonFile)
                     .then(response=> {
                         if (!response.ok){
