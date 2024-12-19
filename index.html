@@ -98,7 +98,18 @@
                     return response.json();
                 })
                 .then(data => {
-                    geojsonLayer = L.geoJSON(data).addTo(map);
+                    geojsonLayer = L.geoJSON(data, {
+                        onEachFeature: function (feature, layer) {
+                            if (feature.properties && feature.properties.Name && feature.properties.Image && feature.properties.length_km) {
+                                var popupcontent = `
+                                    <h4>${feature.properties.Name}</h4><br>
+                                    <strong>Length Travelled: ${feature.properties.length_km} km</strong><br><hr>
+                                    <img src="${feature.properties.Image}" alt="${feature.properties.Name}" style="width:200px;height:auto;">
+                                `;
+                                layer.bindPopup(popupcontent);
+                            }
+                        }
+                    }).addTo(map);
                     map.fitBounds(geojsonLayer.getBounds());
                 })
                 .catch(error => {
