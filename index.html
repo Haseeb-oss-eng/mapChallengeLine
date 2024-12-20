@@ -14,10 +14,14 @@
         <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
         <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>
         <style>
-            body {
-                margin: 50px;
+            #heading {
+                text-align: center;
+                font-family: 'Times New Roman', Times, serif;
+            }
+            #container {
+                margin: 40px;
                 display:flex;
-                height:100vh;
+                height:90vh;
             }
             #content {
                 height:85%;
@@ -48,18 +52,21 @@
         </style>
     </head>
     <body>
-        <div id="content">
-            <h3>TRAVELLED ROUTES</h3>
-            <ul>
-                <li>Ooty Trip</li>
-                <ul id="link"><p onclick="loadgeojson('./route/from7_3.geojson')">Click</p></ul>
-                <li>Hyderabad Trip</li>
-                <ul id="link"><p onclick="loadgeojson('./route/from8_1.geojson')">Click</p></ul>
-                <li>Kodaikanal Trip</li>
-                <ul id="link"><p onclick="loadgeojson('./route/from8_6.geojson')">Click</p></ul>
-            </ul>
+        <h2 id="heading">TRAVELLED TRIPS IN KM (Line)</h2>
+        <div id="container">
+            <div id="content">
+                <h3>TRAVELLED ROUTES</h3>
+                <ul>
+                    <li>Ooty Trip</li>
+                    <ul id="link"><p onclick="loadgeojson('./route/from7_3.geojson')">Click</p></ul>
+                    <li>Hyderabad Trip</li>
+                    <ul id="link"><p onclick="loadgeojson('./route/from8_1.geojson')">Click</p></ul>
+                    <li>Kodaikanal Trip</li>
+                    <ul id="link"><p onclick="loadgeojson('./route/from8_6.geojson')">Click</p></ul>
+                </ul>
+            </div>
+            <div id="map"></div>
         </div>
-        <div id="map"></div>
         <script>
              var map = L.map('map').setView([23.44522057108345, 77.4182006024149], 4);
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -102,7 +109,7 @@
                             if (feature.properties && feature.properties.Date && feature.properties.Name && feature.properties.Image && feature.properties.length_km && feature.properties.Description) {
                                 var popupcontent = `
                                     <h3>${feature.properties.Name}</h3><br>
-                                    <strong>${feature.properties.Date}</strong><br>
+                                    <strong>Date: ${feature.properties.Date}</strong><br>
                                     <p style="font-size:18px; font-family:'Times New Romans'; text-align:'justify';">${feature.properties.Description}</p>
                                     <strong>Length Travelled: ${feature.properties.length_km} km</strong><br><hr>
                                     <img src="${feature.properties.Image}" alt="${feature.properties.Name}" style="width:200px;height:auto;">
